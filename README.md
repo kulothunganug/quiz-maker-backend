@@ -1,15 +1,15 @@
 # Quiz maker app backend
 
-gin - web framework
-gorm - handles database
+[gin](https://gin-gonic.com/) - web framework
+[gorm](https://gorm.io/) - handles database
+[render](https://render.com/) - hosting service
 
 
 ## Endpoints
 
-`POST: /api/v1/quizzes`
+### `POST: /api/v1/quizzes`
 
 example json body:
-
 
 ```json
 {
@@ -40,6 +40,8 @@ example json body:
 }
 ```
 
+example response of the request:
+
 ```json
 {
 	"message": "Quiz created successfully",
@@ -47,7 +49,7 @@ example json body:
 }
 ```
 
-`GET:  /api/v1/quizzes/{quiz_id}`
+### `GET:  /api/v1/quizzes/{quiz_id}`
 
 example response of the request:
 
@@ -119,7 +121,7 @@ example response of the request:
 ```
 
 
-`POST: /api/v1/submissions`
+### `POST: /api/v1/submissions`
 
 example json body request
 
@@ -149,7 +151,7 @@ response
 ```
 
 
-`GET:  /api/v1/submissions/{quiz_id}`
+### `GET:  /api/v1/submissions/{quiz_id}`
 
 example request of the request:
 
