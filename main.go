@@ -1,7 +1,6 @@
 package main
 
 import (
-	"os"
 	"quiz-maker-backend/database"
 	"quiz-maker-backend/routes"
 
@@ -11,10 +10,6 @@ import (
 func main() {
 	database.Connect("quizmaker.db")
 	database.Migrate()
-
-	if os.Getenv("APP_DEV_MODE") == "PROD" {
-		gin.SetMode(gin.ReleaseMode)
-	}
 
 	router := initRouter()
 	router.Run(":8000")
