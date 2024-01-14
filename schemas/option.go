@@ -1,5 +1,5 @@
 package schemas
 
 type Option struct {
-	Text string `json:"text"`
+	Text string `json:"text" binding:"required"`
 }
