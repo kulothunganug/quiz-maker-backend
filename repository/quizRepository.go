@@ -26,10 +26,10 @@ func CreateQuiz(quizReq schemas.Quiz) (uint, error) {
 		question.Text = questionReq.Text
 		question.QuizID = quiz.ID
 
-		for idx, optionReq := range questionReq.Options {
+		for idx, optionText := range questionReq.Options {
 			var option models.Option
 			option.ID = RandomUint()
-			option.Text = optionReq.Text
+			option.Text = optionText
 			option.QuestionID = question.ID
 			question.Options = append(question.Options, option)
 
