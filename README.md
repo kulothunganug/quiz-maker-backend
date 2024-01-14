@@ -19,22 +19,12 @@ example json body:
 		{
 			"text": "What is str?",
 			"correctOptionIdx": 0,
-			"options": [
-				{"text": "string"},
-				{"text": "integer"},
-				{"text": "dict"},
-				{"text": "set"}
-			]
+			"options": ["string", "integer", "dict", "set"]
 		},
 		{
 			"text": "What is dict?",
 			"correctOptionIdx": 2,
-			"options": [
-				{"text": "string"},
-				{"text": "integer"},
-				{"text": "dict"},
-				{"text": "set"}
-			]
+			"options": ["string", "integer", "dict", "set"]
 		}
 	]
 }
@@ -85,7 +75,6 @@ example response of the request:
 					"text": "integer"
 				}
 			],
-			"correctOptionId": 0,
 			"text": "What is str?"
 		},
 		{
@@ -113,7 +102,6 @@ example response of the request:
 					"text": "set"
 				}
 			],
-			"correctOptionId": 0,
 			"text": "What is dict?"
 		}
 	]

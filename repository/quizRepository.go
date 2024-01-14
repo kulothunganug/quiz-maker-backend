@@ -49,21 +49,11 @@ func CreateQuiz(quizReq schemas.Quiz) (uint, error) {
 	return quiz.ID, nil
 }
 
-func GetQuiz(quizId string, nullifyAnswers bool, quiz *models.Quiz) error {
+func GetQuiz(quizId string, quiz *models.Quiz) error {
 	record := database.Instance.Where("ID = ?", quizId).Preload("Questions.Options").First(&quiz)
 	if record.Error != nil {
 		return errors.New(record.Error.Error())
 	}
-
-	// set answerOption to 0 to avoid breaching the answer
-	// to avoid duplicating Question schema without CorrectOptionID
-	// i use this startegy
-	if nullifyAnswers {
-		for i := range quiz.Questions {
-			quiz.Questions[i].CorrectOptionID = 0
-		}
-	}
-
 	return nil
 }
 
