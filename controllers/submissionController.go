@@ -20,7 +20,7 @@ func SubmitAnswer(c *gin.Context) {
 
 	submission, err := repository.AddSubmission(&submissionReq)
 	if err != nil {
-		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": err})
+		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
@@ -34,7 +34,7 @@ func GetSubmissions(c *gin.Context) {
 	var submissions []models.Submission
 	err = repository.GetSubmissions(uint(quizId), &submissions)
 	if err != nil {
-		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": err})
+		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 

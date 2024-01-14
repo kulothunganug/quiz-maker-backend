@@ -19,7 +19,7 @@ func CreateQuiz(c *gin.Context) {
 
 	quizId, err := repository.CreateQuiz(quiz)
 	if err != nil {
-		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": err})
+		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
@@ -35,7 +35,7 @@ func GetQuiz(c *gin.Context) {
 	var quiz models.Quiz
 	err := repository.GetQuiz(quizId, true, &quiz)
 	if err != nil {
-		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": err})
+		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
