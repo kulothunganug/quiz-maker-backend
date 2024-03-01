@@ -3,9 +3,10 @@ package repository
 import (
 	"errors"
 	"math/rand"
-	"quiz-maker-backend/database"
 	"quiz-maker-backend/models"
 	"quiz-maker-backend/schemas"
+
+	"gorm.io/gorm"
 )
 
 // should check for if the id already exists or not
@@ -14,7 +15,7 @@ func RandomUint() uint {
 	return uint(rand.Uint32())
 }
 
-func CreateQuiz(quizReq schemas.Quiz) (uint, error) {
+func CreateQuiz(dbInstance *gorm.DB, quizReq schemas.Quiz) (uint, error) {
 	var quiz models.Quiz
 	quiz.ID = RandomUint()
 	quiz.Title = quizReq.Title
@@ -41,7 +42,7 @@ func CreateQuiz(quizReq schemas.Quiz) (uint, error) {
 		quiz.Questions = append(quiz.Questions, question)
 	}
 
-	record := database.Instance.Create(&quiz)
+	record := dbInstance.Create(&quiz)
 	if record.Error != nil {
 		return 0, errors.New(record.Error.Error())
 	}
@@ -49,16 +50,16 @@ func CreateQuiz(quizReq schemas.Quiz) (uint, error) {
 	return quiz.ID, nil
 }
 
-func GetQuiz(quizId string, quiz *models.Quiz) error {
-	record := database.Instance.Where("ID = ?", quizId).Preload("Questions.Options").First(&quiz)
+func GetQuiz(dbInstance *gorm.DB, quizId string, quiz *models.Quiz) error {
+	record := dbInstance.Where("ID = ?", quizId).Preload("Questions.Options").First(&quiz)
 	if record.Error != nil {
 		return errors.New(record.Error.Error())
 	}
 	return nil
 }
 
-func GetQuestionById(questionId string, question *models.Question) error {
-	record := database.Instance.Where("ID = ?", questionId).First(&question)
+func GetQuestionById(dbInstance *gorm.DB, questionId string, question *models.Question) error {
+	record := dbInstance.Where("ID = ?", questionId).First(&question)
 	if record.Error != nil {
 		return errors.New(record.Error.Error())
 	}

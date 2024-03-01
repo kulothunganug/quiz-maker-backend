@@ -8,22 +8,23 @@ import (
 	"gorm.io/gorm"
 )
 
-var (
+type Database struct {
 	Instance *gorm.DB
-	dbError  error
-)
+}
 
-func Connect(databaseName string) {
-	Instance, dbError = gorm.Open(sqlite.Open(databaseName), &gorm.Config{})
-	if dbError != nil {
-		log.Fatal(dbError)
+func New(databaseName string) *Database {
+	log.Println("Initiating Database!")
+	db, err := gorm.Open(sqlite.Open(databaseName), &gorm.Config{})
+	if err != nil {
+		log.Fatal(err)
 		panic("Cannot connect to DB")
 	}
 	log.Println("Connected to Database!")
+	return &Database{Instance: db}
 }
 
-func Migrate() {
-	Instance.AutoMigrate(
+func (db *Database) Migrate() {
+	db.Instance.AutoMigrate(
 		&models.Quiz{},
 		&models.Question{},
 		&models.Option{},
