@@ -19,9 +19,9 @@ func SubmitAnswer(c *gin.Context) {
 		return
 	}
 	db := c.MustGet("db")
-	dbInstance := db.(*gorm.DB)
+	dbInstance := db.(gorm.DB)
 
-	submission, err := repository.AddSubmission(dbInstance, &submissionReq)
+	submission, err := repository.AddSubmission(&dbInstance, &submissionReq)
 	if err != nil {
 		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -36,10 +36,10 @@ func GetSubmissions(c *gin.Context) {
 	quizId, err := strconv.ParseUint(quizIdStr, 10, 32)
 
 	db := c.MustGet("db")
-	dbInstance := db.(*gorm.DB)
+	dbInstance := db.(gorm.DB)
 
 	var submissions []models.Submission
-	err = repository.GetSubmissions(dbInstance, uint(quizId), &submissions)
+	err = repository.GetSubmissions(&dbInstance, uint(quizId), &submissions)
 	if err != nil {
 		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return

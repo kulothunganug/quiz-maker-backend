@@ -21,9 +21,9 @@ func CreateQuiz(c *gin.Context) {
 	}
 
 	db := c.MustGet("db")
-	dbInstance := db.(*gorm.DB)
+	dbInstance := db.(gorm.DB)
 
-	quizId, err := repository.CreateQuiz(dbInstance, quiz)
+	quizId, err := repository.CreateQuiz(&dbInstance, quiz)
 	if err != nil {
 		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -39,10 +39,10 @@ func CreateQuiz(c *gin.Context) {
 func GetQuiz(c *gin.Context) {
 	quizId := c.Param("id")
 	db := c.MustGet("db")
-	dbInstance := db.(*gorm.DB)
+	dbInstance := db.(gorm.DB)
 
 	var quiz models.Quiz
-	err := repository.GetQuiz(dbInstance, quizId, &quiz)
+	err := repository.GetQuiz(&dbInstance, quizId, &quiz)
 	if err != nil {
 		c.AbortWithStatusJSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
